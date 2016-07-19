@@ -8,10 +8,14 @@
 # <bitbar.image></bitbar.image>
 # <bitbar.dependencies></bitbar.dependencies>
 
+# aliaz_file=~/Dropbox/bitbar/aliases.txt
 
-echo "∷ | color=#0033cc"  # ∷ ⚯ ɐ ª
-echo '---'
+# echo "∷ | color=#0033cc"  # ∷ ⚯ ɐ ª
+# echo '---'
 
-$(alias) | while read line; do 
-	echo "$line" | sed -e 's/\(alias \)*//g' 
-done
+# $(alias > alias.txt)
+
+# while read -r line
+# do 
+# 	echo $line
+# done < $aliaz_file
