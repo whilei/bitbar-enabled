@@ -29,8 +29,7 @@
 # VARS
 # 
 # Set your own aka.sh/.zsh/.whatever path here. 
-aka_file=~/.dotfiles/bashers/aka.zsh
-
+aka_file=~/.dotfiles/bashers/aka.bash
 
 # FUNCS
 # 
