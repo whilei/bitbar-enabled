@@ -6,7 +6,7 @@
 #
 # Gets the status of your website
 
-sleep 2m
+sleep 10s
 
 areteh_url='http://areteh.co/#/' # replace with your url
 rstacks_url='https://www.openbound.org' # replace with your url

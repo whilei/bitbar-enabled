@@ -173,9 +173,11 @@ else:
     enterprise_notifications = get_notifications( enterprise=True ) if is_github_enterprise_defined else []
     has_notifications = len( github_notifications ) + len( enterprise_notifications )
     color = active if has_notifications else inactive
-    github_status = get_status()
     octocat_status = octocat_base64_purple
-    if github_status['status'] == 'major':
+    github_status = get_status()
+    if not github_status['status']:
+        octocat_status = octocat_base64_muertos
+    elif github_status['status'] == 'major':
         octocat_status = octocat_base64_major
     elif github_status['status'] == 'minor':
         octocat_status = octocat_base64_minor
