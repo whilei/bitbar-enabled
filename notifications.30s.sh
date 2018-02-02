@@ -15,6 +15,7 @@ import os
 import sys
 import re
 from itertools import groupby
+from collections import defaultdict
 
 # GitHub.com
 github_api_key = '0ca09a86b67f449946ab1b1a4cb1ecb050a9fdad'
@@ -71,6 +72,10 @@ def get_notifications( enterprise ):
 
 def get_status():
     url = 'https://status.github.com/api/status.json'
+    return make_github_request( url ) or {}
+
+def get_status_message():
+    url = 'https://status.github.com/api/last-message.json'
     return make_github_request( url ) or {}
 
 def print_notifications( notifications, enterprise=False ):
@@ -175,12 +180,13 @@ else:
     color = active if has_notifications else inactive
     octocat_status = octocat_base64_purple
     github_status = get_status()
-    if not github_status['status']:
+    if not 'status' in github_status:
         octocat_status = octocat_base64_muertos
     elif github_status['status'] == 'major':
         octocat_status = octocat_base64_major
     elif github_status['status'] == 'minor':
         octocat_status = octocat_base64_minor
+
 
     if (has_notifications):
         print_bitbar_line(
@@ -189,14 +195,27 @@ else:
             image=octocat_status
         )
         print '---'
+        if 'status' in github_status:
+            if (github_status['status'] == 'major') or (github_status['status'] == 'minor'):
+                status_message = get_status_message()
+                print_bitbar_line(
+                    title=( u'%s' % status_message['body'] ).encode('utf-8') ,
+                )
+                print '---'
     else:
         # print '-'
         print_bitbar_line(
             title=''.encode('utf-8') ,
             image=octocat_status
         )
+        print '---'
+        if 'status' in github_status:
+            if (github_status['status'] == 'major') or (github_status['status'] == 'minor'):
+                status_message = get_status_message()
+                print_bitbar_line(
+                    title=( u'%s' % status_message['body'] ).encode('utf-8') ,
+                )
         exit(0)
-
 
     if is_github_defined:
         if len( github_notifications ):
